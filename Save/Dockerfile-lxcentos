@@ -1,0 +1,32 @@
+FROM         centos
+MAINTAINER    caoofduty<tron.lixiang@gmail.com>
+
+#测试宿主机当前上下文的 文件 拷贝到容器/usr/local/路径下（拷贝试例）
+##COPY Python-3.7.2.tgz /usr/local/Python-3.7.2.tgz
+
+#把python与nginx添加到容器中
+#ADD Python-3.7.2.tgz /usr/local/
+##ADD nginx-1.17.1.tar.gz /usr/local/
+
+#安装所需环境组件(FLASK)
+RUN yum -y install vim
+RUN yum -y install net-tools
+RUN yum -y install mariadb-server
+RUN yum -y install gcc gcc-c++ openssl-devel pcre-devel httpd-tools
+RUN yum install -y epel-release
+RUN yum install -y yum-utils && yum-config-manager --enable epel
+RUN yum install -y python-pip
+RUN pip install --upgrade pip
+RUN yum -y install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel
+RUN yum install libffi-devel -y
+RUN yum -y install python
+
+#设置工作访问时候的WORKDIR路径，登录落脚点
+ENV MYPATH /usr/local
+WORKDIR $MYPATH
+
+#配置 其他 环境变量
+#ENV PYTHON /usr/local/python-3.7
+
+#容器运行时监听的端口
+#EXPOSE  80
